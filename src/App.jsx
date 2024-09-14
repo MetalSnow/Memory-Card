@@ -1,12 +1,11 @@
 import Card from './components/Card';
 import ScoreBoard from './components/ScoreBoard';
 import './styles/App.css';
-import { createClient } from 'pexels';
 import { useEffect, useState } from 'react';
 
-// Get key from .env file
-const key = import.meta.env.VITE_API_KEY;
-const client = createClient(key);
+// Define API key and endpoint
+const API_KEY = import.meta.env.VITE_API_KEY;
+const API_URL = 'https://api.pexels.com/v1/search';
 
 function MemoryCard() {
   const [photosArr, setPhotosArr] = useState([]);
@@ -17,8 +16,12 @@ function MemoryCard() {
   const query = 'animal';
 
   useEffect(() => {
-    client.photos
-      .search({ query })
+    fetch(`${API_URL}?query=${query}&per_page=15&page=1`, {
+      headers: {
+        Authorization: API_KEY,
+      },
+    })
+      .then((response) => response.json())
       .then((data) => shuffle(data.photos))
       .then((shuffled) => {
         setPhotosArr(shuffled);
