@@ -1,10 +1,8 @@
 export default function Card({ name, url }) {
   return (
     <>
-      <figure>
-        <img src={url} alt={name} />
-        <figcaption>{name}</figcaption>
-      </figure>
+      <img src={url} alt={name} />
+      <h2>{name}</h2>
     </>
   );
 }
